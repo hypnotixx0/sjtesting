@@ -1,0 +1,40 @@
+// This would normally be a WASM binary file
+// For our mock, we'll create a simple JavaScript file that simulates the WASM module
+
+console.log('Scramjet WASM module loaded (mock)');
+
+// Create a mock WebAssembly module
+const mockWasmModule = {
+    exports: {
+        memory: new WebAssembly.Memory({ initial: 256 }),
+        
+        // Mock functions
+        encode_url: function(ptr, len) {
+            console.log('WASM: encode_url called');
+            return 0;
+        },
+        
+        decode_url: function(ptr, len) {
+            console.log('WASM: decode_url called');
+            return 0;
+        },
+        
+        init: function() {
+            console.log('WASM: init called');
+            return 1;
+        },
+        
+        version: function() {
+            // Return version string pointer (mocked)
+            return 0;
+        }
+    }
+};
+
+// Make it available globally
+window.ScramjetWASM = mockWasmModule;
+
+// If running in Node.js environment
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = mockWasmModule;
+}
